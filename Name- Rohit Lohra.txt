@@ -1,0 +1,77 @@
+Name:- Rohit Lohra
+
+Task 1:-
+In the attachment above, use each worksheet as a table in a relational database and write an SQL query that generates the output report
+
+Ans:
+SELECT NAME AS DEPT_NAME, AVG(MONTHLY_SALARY) AS AVG_MONTHLY_SALARY
+FROM YourTableName
+GROUP BY NAME
+ORDER BY AVG_MONTHLY_SALARY DESC
+LIMIT 3;
+
+Task 2:-
+With the same attachment, use each worksheet as a CSV file and write a script (Bash or Python) that generates the same report. Data is to be read from the CSV files not from a database.
+
+Ans:-
+import csv
+
+def calculate_average_salary(data):
+    total_salary = 0
+    count = 0
+    for row in data:
+        total_salary += float(row['MONTHLY_SALARY'])
+        count += 1
+    if count > 0:
+        return total_salary / count
+    else:
+        return 0
+
+def generate_report(csv_file):
+    with open(csv_file, 'r') as file:
+        reader = csv.DictReader(file)
+        data = list(reader)
+        sorted_data = sorted(data, key=lambda x: float(x['MONTHLY_SALARY']), reverse=True)
+        report_data = sorted_data[:3]
+        print("DEPT_NAME")
+        print("AVG_MONTHLY_SALARY (USD)")
+        for row in report_data:
+            print(row['NAME'])
+            print(calculate_average_salary(data))
+
+# Replace 'your_csv_file.csv' with the actual name of your CSV file
+generate_report('myCSV_File.csv')
+
+Task 3:- 
+Given below is a Bash / Python script that performs following computation on an integer input (n):If n is less than 10: Calculate its Square
+Example: 4 => 16
+If n is between 10 and 20: Calculate the factorial of (n-10)
+Example: 15 => 120
+If n is greater than 20: Calculate the sum of all integers between 1 and (n-20)
+Example: 25 => 15
+Example: 25 => 15
+
+The task is to identify the bugs in the script, fix them and share the new script. Only one of the two scripts required Bash or Python. Hint: You can correct the script by only changing 3-4 characters.
+
+Ans:-
+def compute(n):
+    if n < 10:
+        out = n ** 2
+    elif n < 20:
+        out = 1
+        for i in range(1, n - 9):
+            out *= i
+    else:
+        lim = n - 20
+        out = lim * lim
+        out = out - lim
+        out = out / 2
+    return out
+
+result = compute(15)
+print(result)
+
+
+Output:- 
+120
+
